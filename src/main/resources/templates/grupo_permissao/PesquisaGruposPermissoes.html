@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/LayoutPadrao}"
+	xmlns:salvavidas="http://salvavidas.net"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+	<title>Pesquisa de grupos</title>
+</head>
+
+<body>
+	<section layout:fragment="conteudo">
+		<div class="page-header">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-xs-10">
+						<h1>
+							Pesquisa de grupos
+						</h1>
+					</div>
+				</div>				
+			</div>
+		</div>
+		
+		<div class="container-fluid">
+			
+			<form method="GET" class="form-vertical  js-form-loading" th:object="${gruposFilter}">							
+				
+				<div class="row">					
+					<div class="col-sm-12  form-group">						
+						<label class="control-label" for="nome">Nome do grupo</label>
+						<input class="form-control" type="text" id="nome" th:field="*{nome}"/>						
+					</div>
+				</div>				
+				
+				<div class="row">				  	
+					<div class="col-sm-12  form-group">
+						<label class="control-label">Permissões</label>
+						<div>
+							<th:block th:each="permissao : ${permissoes}">
+								<div class="checkbox  checkbox-inline" style="width: 300px; margin-left: 0;">
+									<input type="checkbox" th:value="${permissao.codigo}" th:field="*{permissoes}">
+									<label th:for="${#ids.prev('permissoes')}" th:text="${#strings.substring(permissao.nome, 5)}">Administrador</label>
+								</div>
+							</th:block>							
+						</div>						
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<button class="btn  btn-primary" type="submit">Pesquisar</button>
+				</div>
+		
+			</form>
+			
+			<hr style="border: 2px solid black;">
+			
+			<div class="table-responsive  sv-tabela-simples">
+				<table class="table  table-hover">
+					<thead>
+						<tr>
+							<th class="table-grupos-col-codigo">Código</th>
+							<th class="table-grupos-col-nome">Nome</th>
+							<th class="table-grupos-col-permissoes">Permissões</th>				
+							<th class="col-acoes"></th>
+						</tr>
+					</thead>
+					
+					<tbody>
+						<tr th:each="grupo : ${grupos}">
+							<td th:text="${grupo.codigo}">1</td>
+							<td class="text-left" th:text="${grupo.nome}">Tesoureiro</td>
+							<td>
+								<span th:each="permissao : ${grupo.permissoes}" th:text="|${permissao.codigo}${permissaoStat.last ? '' : ', '}|">
+									1, 3, 4
+								</span>
+							</td>
+							<td class="text-center">
+								<a class="btn  btn-link  btn-xs  js-tooltip" title="Editar" 
+									href="#" th:href="@{/grupos/{codigo}(codigo=${grupo.codigo})}">
+									<i class="glyphicon  glyphicon-pencil"></i>
+								</a>
+							</td>
+						</tr>
+						
+					</tbody> 
+				</table>
+			</div>
+			
+			<hr style="border: 2px solid black;">
+			
+			<div class="row">
+				<div class="col-sm-4  col-md-3" th:each="grupo : ${grupos}">
+				    <div class="thumbnail">
+					    <div class="caption">
+					    	<span>
+								<h2 th:text="|${grupo.codigo} - ${grupo.nome}|">Administrador</h2>
+							</span>
+							
+							<ul th:each="permissao : ${grupo.permissoes}">
+								<li style="list-style-type: none; margin-left: -10px;" 
+									th:text="|${permissao.codigo} - ${#strings.toLowerCase(#strings.substring(permissao.nome, 5))}|">
+									ROLE_CADASTRAR_CIDADE
+								</li>							 
+							</ul>							
+		
+					    </div>
+				    </div>
+				</div>
+			</div>			
+			
+		</div>		
+		
+	</section>
+</body>
+
+</html>

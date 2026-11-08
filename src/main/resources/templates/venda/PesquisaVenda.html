@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/LayoutPadrao}"
+	xmlns:salvavidas="http://salvavidas.net"
+	xmlns:data="http://www.thymeleaf.org/extras/data">
+
+<head>
+	<title>Pesquisa de vendas</title>
+</head>
+
+<section layout:fragment="conteudo">
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-10">
+					<h1>
+						Pesquisa de vendas
+					</h1>
+				</div>
+				
+				<div class="col-xs-2">
+					<div class="aw-page-header-controls">
+						<a class="btn  btn-default" th:href="@{/vendas/nova}">
+							<i class="glyphicon  glyphicon-plus-sign"></i>
+							<span class="hidden-xs  hidden-sm">Nova venda</span>						
+						</a>
+					</div>
+				</div>
+			</div>				
+		</div>
+	</div>
+	
+	<div class="container-fluid">
+		<form method="GET" class="form-vertical  js-form-loading" th:object="${vendasFilter}" th:action="@{/vendas}">			
+
+			<div class="row">				
+				<div class="form-group  col-sm-6">
+					<label class="control-label" for="codigo">Código</label>
+					<input type="text" class="form-control" id="codigo" th:field="*{codigo}"/>
+				</div>
+				
+				<div class="form-group  col-sm-6">
+					<label class="control-label" for="codigo">Status</label>
+					<select class="form-control" id="categoria" th:field="*{status}">
+						<option value="">Todos os status</option>
+						<option th:each="status : ${vendaStatus}" th:value="${status}" th:text="${status.descricao}">
+							7º Tradição
+						</option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="form-group  col-sm-6">						
+					<label class="control-label" for="dataCriacaoDe">Data de criação</label>						
+					<div class="form-inline">
+						<input class="form-control  aw-form-control-inline-sm  js-date" type="text" id="dataCriacaoDe" 
+							autocomplete="off" th:field="*{dataCriacaoDe}"/>
+						<label for="dataCriacaoAte" class="aw-form-label-between">até</label>
+						<input class="form-control  aw-form-control-inline-sm  js-date" type="text" id="dataCriacaoAte"
+							autocomplete="off" th:field="*{dataCriacaoAte}"/>
+					</div>
+				</div>
+				
+				<div class="form-group  col-sm-6">						
+					<label class="control-label" for="valorTotalDe">Valot total</label>						
+					<div class="form-inline">
+						<input class="form-control  aw-form-control-inline-sm  js-decimal" type="text" id="valorTotalDe" 
+							autocomplete="off" th:field="*{valorMinimo}"/>
+						<label for="valorTotalAte" class="aw-form-label-between">até</label>
+						<input class="form-control  aw-form-control-inline-sm  js-decimal" type="text" id="valorTotalAte" 
+							autocomplete="off" th:field="*{valorMaximo}"/>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">				
+				<div class="form-group  col-sm-6">
+					<label class="control-label" for="nomeCliente">Nome cliente</label>
+					<input type="text" class="form-control" id="nomeCliente" th:field="*{nomeCliente}"/>
+				</div>
+				
+				<div class="form-group  col-sm-6">
+					<label class="control-label" for="cpfOuCnpj">CPF/CNPJ</label>
+					<input type="text" class="form-control" id="cpfOuCnpj" th:field="*{cpfOuCnpj}"/>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<button class="btn  btn-primary" type="submit">Pesquisar</button>
+			</div>				
+			
+		</form>
+		
+		<div class="table-responsive  sv-tabela-simples">
+			<table class="table  table-hover">
+				<thead>
+					<tr>
+						<th class="table-venda-col-codigo">
+							Código
+						</th>
+						<th class="table-venda-col-cliente">
+							<salvavidas:ordenacao page="${pagina}" field="c.nome" text="Cliente"/>
+						</th>
+						<th class="table-venda-col-data">
+							Data de criação
+						</th>
+						<th class="table-venda-col-valor">
+							Valor total
+						</th>
+						<th class="table-venda-col-vendedor">
+							Vendedor
+						</th>
+						<th class="table-venda-col-status">
+							Status
+						</th>				
+												
+						<th class="col-acoes"></th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<tr th:each="venda : ${pagina.conteudo}">
+						<td th:text="${venda.codigo}">1</td>
+						<td th:text="${venda.cliente.nome}">Ricardo</td>
+						<td th:text="${{venda.dataCriacao}}">01/09/2023</td>
+						<td th:text="|R$ ${{venda.valorTotal}}|">R$ 10,00</td>
+						<td th:text="${venda.usuario.nome}">Admin</td>
+						<td th:text="${venda.status.descricao}">Orçamento</td>
+						
+						<td class="text-center">
+							<a class="btn  btn-link  btn-xs  js-tooltip" title="Editar"
+								th:href="@{/vendas/{codigo}(codigo=${venda.codigo})}">
+								<i class="glyphicon  glyphicon-pencil"></i>
+							</a>
+						</td>
+					</tr>
+					
+					<tr th:if="${pagina.vazia}">
+						<td colspan="7">Nenhuma venda encontrada</td>
+					</tr>
+				</tbody> 
+			</table>
+		</div>		
+		
+		<salvavidas:paginacao page="${pagina}"/>
+		
+	</div>
+	
+</section>
+
+</html>

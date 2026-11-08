@@ -1,0 +1,15 @@
+<script id="template-autocomplete-livro" type="text/x-handlebars-template">
+	<div class="sv-tabela-item">
+		<div class="sv-tabela-item__coluna  sv-tabela-item__coluna--foto">
+			<img th:src="@{/fotos/thumbnail.{{foto}}}" class="img-responsive" />
+		</div>
+		<div class="sv-tabela-item__coluna  sv-tabela-item__coluna--detalhes">
+			<span class="sv-tabela-livro-titulo">{{titulo}}</span>
+			<span class="label  label-default">{{isbn}}</span>
+			<span class="sv-tabela-livro-origem">{{origem}}</span>
+		</div>
+		<div class="sv-tabela-item__coluna  sv-tabela-item__coluna--valores">
+			<div class="sv-tabela-livro-valor-medio">R${{valorFormatado}}</div>
+		</div>
+	</div>
+</script>

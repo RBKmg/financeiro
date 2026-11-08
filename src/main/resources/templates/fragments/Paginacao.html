@@ -1,0 +1,106 @@
+<!-- <!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+	
+	<th:block  th:fragment="paginacao (pagina)">
+		<div class="text-center  col-sm-12" th:if="${not pagina.vazia}">
+				<nav>
+					<ul class="pagination  pagination-sm" th:with="paginaAtual=${pagina.atual}">
+						<li th:class="${pagina.primeira} ? disabled">
+							<a th:remove="${pagina.primeira} ? tag" th:href="${pagina.urlParaPagina(paginaAtual - 1)}">
+								<span>&laquo</span>
+							</a>
+						</li>
+						
+						<th:block th:each="p : ${#numbers.sequence(1, pagina.totalDePaginas)}" th:with="numeroPagina=${p - 1}">							
+							<li th:class="${paginaAtual == numeroPagina} ? active">
+								<a th:href="${pagina.urlParaPagina(numeroPagina)}">[[${p}]]</a>
+							</li>	
+						</th:block>											
+
+						<li th:class="${pagina.ultima} ? disabled">
+							<a th:remove="${pagina.ultima} ? tag" th:href="${pagina.urlParaPagina(paginaAtual + 1)}">
+								<span>&raquo</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+	</th:block>	
+	
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="paginacao (pagina)">
+	<div class="text-center col-sm-12" th:if="${not pagina.vazia}">
+		<nav>
+			<ul class="pagination pagination-sm" th:with="paginaAtual=${pagina.atual}, totalPaginas=${pagina.totalDePaginas}">
+
+				<!-- ANTERIOR -->
+				<li th:class="${pagina.primeira} ? disabled">
+					<a th:remove="${pagina.primeira} ? tag" th:href="${pagina.urlParaPagina(paginaAtual - 1)}">
+						<span>&laquo;</span>
+					</a>
+				</li>
+
+				<!-- ATÉ 7 PÁGINAS -->
+				<th:block th:if="${totalPaginas <= 7}">
+					<th:block th:each="p : ${#numbers.sequence(1, totalPaginas)}" th:with="numeroPagina=${p - 1}">
+						<li th:class="${paginaAtual == numeroPagina} ? active">
+							<a th:href="${pagina.urlParaPagina(numeroPagina)}">
+								[[${p}]]
+							</a>
+						</li>
+					</th:block>
+				</th:block>
+
+
+				<!-- MAIS DE 7 PÁGINAS -->
+				<th:block th:if="${totalPaginas > 7}">
+
+					<!-- PRIMEIRAS 3 -->
+					<th:block th:each="p : ${#numbers.sequence(1, 3)}" th:with="numeroPagina=${p - 1}">
+						<li th:class="${paginaAtual == numeroPagina} ? active">
+							<a th:href="${pagina.urlParaPagina(numeroPagina)}">
+								[[${p}]]
+							</a>
+						</li>
+					</th:block>
+
+					<!-- RETICÊNCIAS -->
+					<li class="disabled">
+						<span>...</span>
+					</li>
+
+
+					<!-- ÚLTIMAS 3 -->
+					<th:block th:each="p : ${#numbers.sequence(totalPaginas - 2, totalPaginas)}" th:with="numeroPagina=${p - 1}">
+						<li th:class="${paginaAtual == numeroPagina} ? active">
+							<a th:href="${pagina.urlParaPagina(numeroPagina)}">
+								[[${p}]]
+							</a>
+						</li>
+					</th:block>
+				</th:block>
+
+				<!-- PRÓXIMA -->
+				<li th:class="${pagina.ultima} ? disabled">
+					<a th:remove="${pagina.ultima} ? tag" th:href="${pagina.urlParaPagina(paginaAtual + 1)}">
+						<span>&raquo;</span>
+					</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
+</th:block>
+
+</html>
+
+
+
+
+

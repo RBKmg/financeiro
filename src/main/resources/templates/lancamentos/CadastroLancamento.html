@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/LayoutPadrao}"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	xmlns:salvavidas="http://salvavidas.net">
+	
+<head>
+	<title>Cadastro de lançamento</title>
+	
+	<link rel="stylesheet" type="text/css" th:href="@{/stylesheets/vendors/bootstrap-switch.min.css}"/>
+</head>
+
+<body>	
+	<section layout:fragment="conteudo">
+
+		<div class="page-header">
+			<div class="container-fluid">
+				<h1 th:if="${lancamento.isNovo()}">Cadastro de lançamento</h1>
+				<h1 th:unless="${lancamento.isNovo()}" th:text="|Edição de ${lancamento.descricao}|"></h1>
+			</div>
+		</div>
+
+		<div class="container-fluid">
+		
+			<form method="post" class="form-vertical  js-form-loading" th:object="${lancamento}"
+				th:action="${lancamento.novo} ? @{/lancamentos/novo} : @{/lancamentos/{codigo}(codigo=${lancamento.codigo})}">
+				
+				<salvavidas:msgSuccessOrError/>
+				
+				<input type="hidden" th:field="*{codigo}">
+				
+				<div class="row">					
+					<div class="col-sm-12  form-group  sv-required" salvavidas:classforerror="tipo">
+						<label class="control-label">Status</label>
+						<div>
+							<th:block th:each="tipo : ${tipos}">
+								<div class="radio  radio-inline">
+									<input class="js-radio-tipo-lancamento" type="radio" th:id="|id_${tipo}|"
+										th:value="${tipo}" th:field="*{tipo}" data:documento="${tipo.documento}">
+									<label class="control-label" th:for="|id_${tipo}|" th:text="${tipo.descricao}">Recebimento</label>
+								</div>						
+							</th:block>													
+						</div>						
+					</div>
+				</div>
+			
+				<div class="row">				  	
+					<div class="col-sm-3  form-group  sv-required" salvavidas:classforerror="dataVencimento">					
+						<label class="control-label" for="vencimento">Vencimento</label> 
+						<input class="form-control  js-date" type="text" id="vencimento" data-date-today-highlight="true" 
+							th:field="*{dataVencimento}"/>															
+					</div>
+					
+					<div class="col-sm-3  form-group">					
+						<label class="control-label" for="recebimento">Recebimento</label> 
+						<input class="form-control  js-date" type="text" id="recebimento" data-date-today-highlight="true" disabled
+							th:field="*{dataPagamento}"/>															
+					</div>					
+				</div>
+				  
+				<div class="row">				  	
+					<div class="col-sm-8  form-group  sv-required" salvavidas:classforerror="descricao">					
+						<label class="control-label" for="descricao">Descrição</label> 
+						<input class="form-control" type="text" maxlength="255" id="descricao" th:field="*{descricao}"/>															
+					</div>
+					
+					<div class="col-sm-4  form-group  sv-required" salvavidas:classforerror="valor">					
+						<label class="control-label" for="valor">Valor</label> 
+						<input class="form-control  js-decimal" type="text" id="valor" th:field="*{valor}"/>															
+					</div>
+				</div>
+				
+				<div class="row">					
+					<div class="col-sm-6  form-group  sv-required" salvavidas:classforerror="categoria">
+						<label class="control-label" for="categoria">Categoria</label>
+						<div class="sv-field-action">
+							<select class="form-control" id="categoria" th:field="*{categoria}">
+								<option value="">Selecione a categoria</option>
+								<option th:each="categoria : ${categorias}" th:value="${categoria.codigo}" th:text="${categoria.nome}">
+									7º Tradição
+								</option>
+							</select>
+							
+							<div class="sv-field-action__icon" sec:authorize="hasRole('ROLE_DELETAR_CATEGORIA')">
+								<a href="#" data-toggle="modal" data-target="#modalCadastroRapidoCategoria">
+									<i class="glyphicon  glyphicon-plus-sign  sv-glyphicon-large"></i>
+								</a>
+							</div>	
+						</div>																						
+					</div>
+					
+					<div class="col-sm-6  form-group  sv-required" salvavidas:classforerror="usuario">
+						<label class="control-label" for="pessoa">Pessoa</label>
+						<select class="form-control" id="pessoa" th:field="*{usuario}">
+							<option value="">Selecione a pessoa</option>
+							<option th:each="pessoa : ${pessoas}" th:value="${pessoa.codigo}" th:text="${pessoa.nome}">Ricardo</option>
+						</select>											 
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="observacao">Observação</label>
+					<textarea class="form-control" rows="3" id="observacao" th:field="*{observacao}"></textarea>
+				</div>	
+						
+				
+				<div class="form-group">
+					<button class="btn  btn-primary" type="submit">Salvar</button>
+					<button class="btn  btn-info" type="reset" th:if="${lancamento.isNovo()}">Novo</button>
+					<a class="btn  btn-info" th:if="${not lancamento.isNovo()}" th:href="@{/lancamentos/novo}">
+						<span class="hidden-xs  hidden-sm">Novo</span>								
+					</a>
+					<a class="btn  btn-link" th:href="@{/lancamentos}">Voltar para a pesquisa</a>
+				</div>
+		
+			</form>
+		</div>
+		
+		<div th:replace="~{categorias/CadastroRapidoCategoria :: modal}"></div>
+	</section>
+	
+	<th:block layout:fragment="javascript-extra">
+		<script th:src="@{/javascripts/categoria.cadastro-rapido.js}"></script>
+		<script th:src="@{/javascripts/lancamento.rotulo-dinamico.js}"></script>		
+	</th:block>
+</body>
+
+</html>

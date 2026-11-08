@@ -1,0 +1,401 @@
+/* ########################### *\
+|  COMPONENTES CADASTRO RAPIDO  |
+|   COMPONENTE DE MINI LOADING   | 
+\* ########################### */
+/* Field action */
+.sv-field-action {
+	display: flex;
+}
+
+.sv-field-action__icon {
+	margin: 6px 0 0 5px;	
+}
+
+.sv-glyphicon-large {
+	font-size: 18px;
+}
+
+
+/* ################# *\
+|  COMPONENTE UPLOAD  | 
+\* ################# */
+.sv-upload {
+	padding: 15px;
+	
+	border: 1px dashed #ddd;
+	border-radius: 4px;
+	background: #fafafa;
+	
+	text-align: center;
+}
+
+.sv-upload-form-file {
+	display: inline-block;
+	vertical-align: middle;
+	position: relative;
+	overflow: hidden;
+	margin-bottom: 1px;
+}
+
+.sv-upload-form-file > input[type=file] {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	width: 100%;
+	opacity: 0;
+	cursor: pointer;
+	
+	font-size: 500px;
+}
+
+
+/* ################# *\
+|      UTILIDADES     | 
+\* ################# */
+/* coloca um asteristico nos campos obrigatoros */
+.sv-required > .control-label:after {
+	content: "*";
+}
+
+
+/* ################### *\
+|     TABELA SIMPLES    | 
+\* ################### */
+.sv-tabela-simples {
+	margin-top: 16px;
+}
+
+.sv-tabela-simples table tr th {
+	border-bottom-width: 1px;
+}
+
+.sv-tabela-simples table tr td {
+	border-top: none;
+	border-bottom: 1px solid #e7eaec;
+	padding: 10px;
+	vertical-align: middle;
+}
+
+
+/* ---------------------------------
+   Coluna acoes - EDITAR E EXCLUIR
+------------------------------------ */
+.col-acoes {
+	width: 80px;
+}
+
+/* -----------------------------
+   Colunas da tabela livro
+------------------------------ */
+.table-livros-col-foto {
+	min-width: 50px;
+	width: 50px;
+}
+.table-livros-col-titulo {}			
+.table-livros-col-tipo {}
+.table-livros-col-paginas {}
+.table-livros-col-origem {}
+
+.table-livros-col-valor {
+	width: 100px;
+	text-align: right;
+}
+
+
+/* --------------------------------
+   Colunas da tabela categoria 
+----------------------------------*/
+.table-categorias-col-codigo {
+	width: 80px;
+	text-align: center;
+}
+.table-categorias-col-nome {}
+
+
+/* -------------------------------
+  Colunas da tabela clientes 
+-------------------------------- */
+.table-clientes-col-nome {}
+.table-clientes-col-tipoPessoa {
+	width: 120px;
+	text-align: center;
+}
+.table-clientes-col-cpfOuCnpj {
+	width: 140px;
+	text-align: right;
+}
+.table-clientes-col-telefone {
+	width: 140px;
+	text-align: right;
+}
+.table-clientes-col-cidade-estado {
+	width: 140px;
+	text-align: right;
+}
+
+/*----------------------------
+  Colunas da tabela cidades 
+------------------------------*/
+.table-cidades-col-nome {}
+.table-cidades-col-estado {
+	width: 140px;
+	text-align: right;
+}
+
+
+/* ---------------------------
+   Colunas da tabela cidades
+---------------------------- */
+.table-usuarios-col-check {
+	width: 30px;
+	text-align: center;
+}
+.table-usuarios-col-nome {
+	width: 25%;
+}
+.table-usuarios-col-email {
+	width: 25%;
+}
+.table-usuarios-col-grupos {
+	width: 20%;
+}
+.table-usuarios-col-ativo {}
+
+/* -------------------------------
+   Colunas da tabela lançamentos
+---------------------------------- */
+.table-lancamentos-col-pessoa {
+	width: 20%;
+}
+.table-lancamentos-col-descricao {
+	width: 30%;
+	text-align: left;
+}
+.table-lancamentos-col-vencimento {
+	width: 13%;
+	text-align: right;
+}
+.table-lancamentos-col-pagamento {
+	width: 13%;
+	text-align: right;
+}
+.table-lancamentos-col-valor {
+	width: 13%;
+	text-align: right;
+}
+
+/* --------------------------
+   Colunas da tabela vendas
+----------------------------- */
+.table-venda-col-codigo {
+	width: 100px;
+}
+.table-venda-col-cliente {
+	width: 30%;
+}
+.table-venda-col-data {
+	width: 20%;
+}
+.table-venda-col-valor {
+	width: 15%;
+}
+.table-venda-col-vendedor {
+	width: 15%;
+}
+.table-venda-col-status {
+	width: 10%;
+}
+
+
+/* ########################### *\
+|  CUSTOMIZAÇÃO DE COMPONENTES  | 
+\* ########################### */
+/* CHECK BOX NA TELA DE CADASTRO */
+.checkbox input[type="checkbox"]:checked + input + label::after {
+	font-family: 'FontAwesome';
+	content: "\f00c";
+}
+
+/* ----------------------------------
+   Tabela Cervejas página de Venda 
+------------------------------------*/
+.sv-tabela-livros {
+	margin-bottom: 15px;
+}
+
+.sv-tabela-livros__vazio {
+	padding: 15px 15px;
+	
+	border: 1px dashed #ddd;
+	
+	text-align: center;
+	font-size: 1.2em;
+	font-weight: 300;
+	color: #555;
+}
+
+/*
+#####################################################
+#### PÁGINAS DE CADASTRO DE VENDA RENDERIZAR FOTO ###
+################ EASY AUTO-COMPLETE #################
+#####################################################
+*/
+/* Easy Autocomplete */
+.easy-autocomplete input {
+	border-radius: 2px !important;
+}
+
+.easy-autocomplete-container ul li {
+	font-size: 1em !important;
+	padding: 0px 5px !important;
+}
+
+/* Tabela Item */
+.sv-tabela-item {
+	position: relative; /* Para que o painel de exclusão apareça dentro da linha */
+	
+	padding: 15px 0;
+	
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+
+.sv-tabela-item:after {
+	clear: both;
+	display: block;
+    content: "";
+}
+
+.sv-tabela-item ~ .sv-tabela-item {
+	border-top: 1px solid #ddd;
+}
+
+.sv-tabela-item__coluna {
+	padding: 0 10px;
+}
+
+.sv-tabela-item__coluna--foto {
+	float: left;
+	width: 60px;
+	
+	text-align: center;
+}
+
+.sv-tabela-item__coluna--valores {
+	padding-right: 0px;
+}
+
+.sv-tabela-item__coluna--detalhes, .sv-tabela-item__coluna--valores {
+	margin-left: 60px;
+}
+
+.sv-tabela-livro-titulo {
+	font-weight: 500;
+	font-size: 1.1em;
+	display: block;
+}
+
+.sv-tabela-livro-origem {
+	color: #aaa;
+	display: block;
+	font-weight: 200;
+}
+
+.sv-tabela-livro-campo-quantidade {
+	width: 30px;
+	text-align: right;
+}
+
+.sv-tabela-livro-valor-pequeno {
+	font-weight: 300;
+	font-size: 1em;
+}
+
+.sv-tabela-livro-valor-medio {
+	font-weight: 300;
+	font-size: 1.3em;
+}
+
+.sv-tabela-livro-valor-grande {
+	font-weight: 300;
+	font-size: 1.6em;
+}
+
+/*##################################################
+######  EXCLUSAO DE CERVEJA DO CADASTRO DE VENDA####
+#################################################### */
+.sv-tabela-item__painel-exclusao {
+	position: absolute;
+	top: 0;
+	right: 100000px;
+	height: 100%;
+	width: 50%;
+	
+	text-align: center;
+	padding-top: 335px;
+	
+	background-color: #f0ad4e;
+	
+	opacity: 0;
+	transition: opacity 0.5s;
+}
+
+.solicitando-exclusao .sv-tabela-item__painel-exclusao {
+	right: 0;
+	opacity: 1;
+}
+
+.sv-tabela-item__titulo-exclusao {
+	display: block;
+	opacity: 1;
+}
+
+.sv-tabela-item__titulo-exclusao {
+	display: block;
+	margin-bottom: 5px;
+	
+	color: #fff;
+	font-size: 1.3em;
+}
+
+
+@media (min-width: 768px) { /* screen-sm-min */
+	.sv-tabela-item__painel-exclusao {
+		width: 40%;
+		padding-top: 10px;
+	}
+	
+	.sv-tabela-item__coluna {
+		float: left;
+		margin-left: 0px;
+	}
+	
+	.sv-tabela-item__coluna--detalhes {
+		width: calc(70% - 30px);
+	}
+	
+	.sv-tabela-item__coluna--valores {
+		width: calc(30% - 30px);
+
+		text-align: right;
+	}
+}
+
+/*
+############################
+### VALOR TOTAL NEGATIVO ###
+############################ */
+.negativo {
+	color: red;
+}
+
+
+
+
+
+
+
+

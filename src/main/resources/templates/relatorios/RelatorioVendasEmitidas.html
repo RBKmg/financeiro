@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/LayoutPadrao}">
+	
+<head>
+	<title>Relatório - Vendas Emitidas</title>
+</head>
+
+<body>	
+	<section layout:fragment="conteudo">
+
+		<div class="page-header">
+			<div class="container-fluid">
+				<h1>Relatório de Vendas Emitidas</h1>			
+			</div>
+		</div>
+
+		<div class="container-fluid">			
+			<form method="POST" class="form-vertical  js-form-loading" th:object="${periodoRelatorio}"
+				th:action="@{/relatorio/vendasEmitidas}">	
+				
+				<th:block th:include="fragments/MensagemErroValidacao"></th:block>				
+				
+				<div class="row">
+					<div class="form-group  col-sm-12">						
+						<label class="control-label" for="dataInicio">Data de criação</label>						
+						<div class="form-inline">
+							<input class="form-control  aw-form-control-inline-sm  js-date" type="text" id="dataInicio" 
+								autocomplete="off" th:field="*{dataInicio}"/>
+							<label for="dataFim" class="aw-form-label-between">até</label>
+							<input class="form-control  aw-form-control-inline-sm  js-date" type="text" id="dataFim"
+								autocomplete="off" th:field="*{dataFim}"/>
+						</div>
+					</div>
+				</div>					
+				
+				<div class="form-group">
+					<button class="btn  btn-primary" type="submit">Gerar</button>
+				</div>
+		
+			</form>
+		</div>		
+		
+	</section>	
+</body>
+
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+ 	xmlns:salvavidas="http://salvavidas.net">
+	
+<body>
+	
+	<aside class="aw-layout-sidebar  js-sidebar" th:fragment="layout-sidebar">
+		<div class="aw-layout-sidebar__content">
+		
+			<nav class="aw-menu  js-menu">
+				<ul class="aw-menu__list">
+			        
+			        <li class="aw-menu__item">
+			            <a href="#">
+							<i class="fa  fa-fw  fa-home"></i><span>Dashboard</span>
+				            <i class="aw-menu__navigation-icon  fa"></i>
+			            </a>
+			      
+			            <ul class="aw-menu__list  aw-menu__list--sublist">
+				            <li class="aw-menu__item  aw-menu__item--link" salvavidas:menu="@{/dashboard}">
+								<a th:href="@{/dashboard}">Vendas</a>
+							</li>
+							 <li class="aw-menu__item  aw-menu__item--link" salvavidas:menu="@{/}">
+								<a th:href="@{/}">Lançamentos</a>
+							</li>
+			            </ul>
+			        </li>
+			        
+			        <li class="aw-menu__item">
+			            <a href="#">
+							<i class="fa  fa-fw  fa-user"></i><span>Usuários</span>
+				            <i class="aw-menu__navigation-icon  fa"></i>
+			            </a>
+			      
+			            <ul class="aw-menu__list  aw-menu__list--sublist">
+				            <li class="aw-menu__item  aw-menu__item--link" salvavidas:menu="@{/usuarios.*}">
+								<a th:href="@{/usuarios}">Pesquisa de usuários</a>
+							</li>
+							
+							<li class="aw-menu__item  aw-menu__item--link" salvavidas:menu="@{/grupos.*}" 
+								sec:authorize="hasRole('ROLE_ASSOCIAR_GRUPO_PERMISSAO')">
+								<a th:href="@{/grupos}">Pesquisa de grupos</a>
+							</li>
+			            </ul>
+			        </li>
+			        
+			        <li class="aw-menu__item">
+			            <a href="#">
+				            <i class="fa  fa-fw  fa-shopping-basket"></i><span>Venda</span>
+				            <i class="aw-menu__navigation-icon  fa"></i>
+			            </a>
+			      
+			            <ul class="aw-menu__list  aw-menu__list--sublist">
+				            <li class="aw-menu__item  aw-menu__item--link" salvavidas:menu="@{/vendas.+}">
+								<a th:href="@{/vendas/nova}">Cadastro de venda</a>
+							</li>
+							 <li class="aw-menu__item  aw-menu__item--link" salvavidas:menu="@{/vendas}">
+								<a th:href="@{/vendas}">Pesquisa de vendas</a>
+							</li>
+			            </ul>
+			        </li>
+		
+			        <li class="aw-menu__item">
+			            <a href="#">
+				            <i class="fa  fa-fw  fa-book"></i><span>Estoque</span>
+				            <i class="aw-menu__navigation-icon  fa"></i>
+			            </a>
+			      
+			            <ul class="aw-menu__list  aw-menu__list--sublist">
+				            <li class="aw-menu__item  aw-menu__item--link" salvavidas:menu="@{/livros.*}">
+								<a th:href="@{/livros}">Livros</a>
+							</li>				            
+			            </ul>
+			        </li>
+		
+			        <li class="aw-menu__item">
+			            <a href="#">
+				            <i class="fa  fa-fw  fa-search"></i><span>Pesquisas</span>
+				            <i class="aw-menu__navigation-icon  fa"></i>
+			            </a>
+			
+			            <ul class="aw-menu__list  aw-menu__list--sublist">
+							<li class="aw-menu__item  aw-menu__item--link" salvavidas:menu="@{/lancamentos.*}">
+								<a th:href="@{/lancamentos}">Lançamentos</a>
+							</li>
+							
+				            <li class="aw-menu__item  aw-menu__item--link" salvavidas:menu="@{/clientes.*}">
+								<a th:href="@{/clientes}">Clientes</a>
+							</li>
+							
+							<li class="aw-menu__item  aw-menu__item--link" salvavidas:menu="@{/categorias.*}">
+								<a th:href="@{/categorias}">Categorias</a>
+							</li>
+							
+							<li class="aw-menu__item  aw-menu__item--link" salvavidas:menu="@{/cidades.*}">
+								<a th:href="@{/cidades}">Cidades</a>
+							</li>
+			            </ul>
+			        </li>
+			        
+			        
+			        <li class="aw-menu__item">
+			            <a href="#">
+							<i class="fa  fa-fw  fa-file-pdf-o"></i><span>Relatórios</span>
+				            <i class="aw-menu__navigation-icon  fa"></i>
+			            </a>
+			      
+			            <ul class="aw-menu__list  aw-menu__list--sublist">
+				            <li class="aw-menu__item  aw-menu__item--link" salvavidas:menu="@{/relatorio/vendasEmitidas}">
+								<a th:href="@{/relatorio/vendasEmitidas}">Vendas Emitidas</a>
+							</li>
+							<li class="aw-menu__item  aw-menu__item--link" salvavidas:menu="@{/relatorio/lancamentos}">
+								<a th:href="@{/relatorio/lancamentos}">Lançamentos</a>
+							</li>
+			            </ul>
+			        </li>
+		
+		        </ul>
+	        </nav>
+
+		</div>
+	</aside>
+
+</body>	
+	
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/LayoutPadrao}"
+	xmlns:salvavidas="http://salvavidas.net"
+	xmlns:data="http://www.thymeleaf.org/extras/data">
+
+<head>
+	<title>Dashboard Lancamentos</title>
+</head>
+
+<section layout:fragment="conteudo">
+
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="row">
+					<div class="col-xs-10">
+						<h1>Dashboard Lançamentos</h1>
+					</div>
+					
+					<div class="col-xs-2" sec:authorize-url="/anual">
+						<div class="aw-page-header-controls">
+							<a class="btn  btn-default" th:href="@{/anual}">
+								<i class="glyphicon  glyphicon-stats"></i>
+								<span class="hidden-xs  hidden-sm">Anual</span>						
+							</a>
+						</div>
+					</div>
+				</div>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="aw-box">
+					<div class="aw-box__icon">
+						<i class="fa  fa-plus  fa-3x"></i>
+					</div>
+					<div class="aw-box__value">R$ [[${{totalReceita}}]]</div>
+					<div class="aw-box__title">Total de receita</div>
+				</div>
+			</div>
+			
+			<div class="col-sm-4">
+				<div class="aw-box">
+					<div class="aw-box__icon">
+						<i class="fa  fa-minus  fa-3x"></i>
+					</div>
+					<div class="aw-box__value">R$ [[${{totalDespesa}}]]</div>
+					<div class="aw-box__title">Total de despesa</div>
+				</div>
+			</div>
+			
+			<div class="col-sm-4">
+				<div class="aw-box">
+					<div class="aw-box__icon">
+						<i class="fa  fa-money  fa-3x"></i>
+					</div>
+					<div class="aw-box__value">R$ [[${{saldoDoMes}}]]</div>
+					<div class="aw-box__title">Saldo do mês</div>
+				</div>
+			</div>
+		</div>
+		
+
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="aw-graph-box">
+					<div class="aw-graph-box__header">
+						<h2 class="aw-graph-box__title">Lançamentos por categoria <small>mês atual</small></h2>
+					</div>
+					<div class="aw-graph-box__content">
+						<!--<div class="aw-graph-box__no-data">
+							<i class="fa  fa-line-chart  fa-2x"></i>
+							<span>Não há dados</span>
+						</div>-->
+						<div>
+							<canvas id="graficoLancamentosPorCategoria" height="160"></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-sm-6">
+				<div class="aw-graph-box">
+					<div class="aw-graph-box__header">
+						<h2 class="aw-graph-box__title">Lançamentos diários <small>mês atual</small></h2>
+					</div>
+					<div class="aw-graph-box__content">
+						<!--<div class="aw-graph-box__no-data">
+							<i class="fa  fa-line-chart  fa-2x"></i>
+							<span>Não há dados</span>
+						</div>-->
+						<div>
+							<canvas id="graficoLancamentosPorDia" height="160"></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<th:block layout:fragment="javascript-extra">
+	<script th:src="@{/javascripts/vendors/Chart.min.js}"></script>
+	<script th:src="@{/javascripts/lancamento.dashboard-graficos.js}"></script>
+</th:block>
+
+</html>

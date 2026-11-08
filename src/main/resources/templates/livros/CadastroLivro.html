@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/LayoutPadrao}"
+	xmlns:salvavidas="http://salvavidas.net">
+	
+<head>
+	<title>Cadastro de livro</title>
+	
+	<link rel="stylesheet" th:href="@{/stylesheets/vendors/upload.min.css}">
+</head>
+
+<body>	
+	<section layout:fragment="conteudo">
+
+		<div class="page-header">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-xs-10">
+						<h1 >Cadastro de livro</h1> <!-- th:if="${livro.novo}" -->
+						<!-- <h1 th:unless="${livro.novo}" th:text="|Edição do ${livro.titulo}|">Edição de livro</h1>  -->
+					</div>
+					
+					<div class="col-xs-2">
+						<div class="aw-page-header-controls">
+							<a class="btn  btn-default" th:href="@{/livros}">
+								<i class="glyphicon  glyphicon-plus-sign"></i>
+								<span class="hidden-xs  hidden-sm">Pesquisar</span>								
+							</a>
+						</div>
+					</div>
+				</div>				
+			</div>
+		</div>
+
+		<div class="container-fluid">
+			
+			<form method="post" class="form-vertical  js-form-loading" th:object="${livro}" >
+				<!-- th:action="${livro.novo} ? @{/livros/novo} : @{/livros/{codigo}(codigo=${livro.codigo})}"> -->	
+				
+				<salvavidas:msgSuccessOrError/>
+				
+				<input type="hidden" th:field="*{codigo}">
+				 
+				<div class="row">					
+					<div class="form-group  col-sm-6  sv-required" salvavidas:classforerror="titulo">					
+						<label class="control-label" for="titulo">Título</label>
+						<input class="form-control" type="text" id="titulo" th:field="*{titulo}"/>						
+					</div>
+					
+					<div class="form-group  col-sm-6  sv-required" salvavidas:classforerror="autor"> 
+						<label class="control-label" for="autor">Autor</label>
+						<input class="form-control" type="text" id="autor" th:field="*{autor}"/>
+					</div>			
+				</div>
+						
+				<div class="form-group  sv-required" salvavidas:classforerror="descricao">
+					<label class="control-label" for="descricao">Descrição</label>
+					<textarea class="form-control" rows="3" id="descricao" th:field="*{descricao}"></textarea>
+				</div>
+		
+		 
+				<div class="row">
+					<div class="col-sm-3  form-group  sv-required" salvavidas:classforerror="tipo">
+						<label class="control-label" for="tipo">Tipo</label>						
+						<select class="form-control" id="tipo" th:field="*{tipo}">
+							<option value="">Selecione o tipo</option>
+							<option th:each="tipo : ${tipos}" th:value="${tipo}" th:text="${tipo.descricao}">Livro</option>
+						</select>							
+					</div> 
+					
+					<div class="col-sm-3  form-group  sv-required" salvavidas:classforerror="paginas">
+						<label class="control-label" for="paginas">Nº de páginas</label>
+						<input class="form-control  js-plain" type="text" placeholder="Unidades" id="paginas" th:field="*{paginas}"/>
+					</div>    
+					
+					<div class="col-sm-3  form-group  sv-required" salvavidas:classforerror="isbn">
+						<label class="control-label" for="isbn">ISBN</label>
+						<input class="form-control" type="text" id="isbn" th:field="*{isbn}"/>
+					</div>
+					 
+					<div class="col-lg-3  col-sm-6  form-group  sv-required" salvavidas:classforerror="origem">
+						<label class="control-label">Origem</label>
+						<div>
+							<th:block th:each="origem : ${origens}">
+								<div class="radio  radio-inline">
+									<input type="radio" th:id="|id_${origem}|" th:value="${origem}" th:field="*{origem}">
+									<label th:for="|id_${origem}|" th:text="${origem.descricao}">Nacional</label>
+								</div>	
+							</th:block>													
+						</div>						
+					</div>
+				</div>  
+				
+				
+				<div class="row">				  	
+					<div class="col-sm-3  form-group  sv-required" salvavidas:classforerror="valor">
+						<label class="control-label" for="valor">Valor unitário</label>
+						<div class="input-group">
+							<div class="input-group-addon">R$</div>
+							<input class="form-control  js-decimal" type="text" id="valor" th:field="*{valor}"/>
+						</div>												
+					</div>
+					
+					<div class="col-sm-3  form-group  sv-required" salvavidas:classforerror="comissao">				
+						<label class="control-label" for="comissao">Comissão</label> 
+						<div class="input-group">
+							<input class="form-control  js-decimal" type="text" id="comissao" th:field="*{comissao}"/>
+							<div class="input-group-addon">%</div>				
+						</div>											
+					</div>
+					
+					<div class="col-sm-3  form-group  sv-required" salvavidas:classforerror="estoque">
+						<label class="control-label" for="estoque">Estoque</label>
+						<input class="form-control  js-plain" id="estoque" type="text" placeholder="Unidades" th:field="*{estoque}"/>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="form-group  col-sm-12">
+						<input type="hidden" th:field="*{foto}">
+						<input type="hidden" th:field="*{contentType}">
+						<input type="hidden" th:field="*{novaFoto}">
+						
+						<label class="control-label">Foto</label>
+						
+						<div class="js-container-foto-livro" th:attr="data-url-fotos=@{/fotos}">
+							<div class="sv-upload" id="upload-drop">
+								<i class="glyphicon  glyphicon-cloud-upload"></i>
+								<span>Arraste a foto aqui </span>
+								<a class="sv-upload-form-file">
+									selecione <input type="file" accept=".jpg, .jpeg, .png" id="upload-select">
+								</a>							
+							</div>
+						</div>
+																											
+					</div>
+				</div> 
+				
+				<div class="form-group">
+					<button class="btn  btn-primary" type="submit">Salvar</button>
+				</div>
+		
+			</form>
+		</div>
+		
+		<th:block th:replace="~{handleBars/FotoLivro}"></th:block>
+	</section>
+	
+	<th:block layout:fragment="javascript-extra">
+		<script th:src="@{/javascripts/vendors/uikit.min.js}"></script>
+		<script th:src="@{/javascripts/vendors/upload.min.js}"></script>
+		<script th:src="@{/javascripts/vendors/handlebars.min.js}"></script>		
+		<script th:src="@{/javascripts/livro.upload-foto.js}"></script>
+	</th:block>
+</body>
+
+</html>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+
+    <!-- ===================================================== -->
+    <!-- Spring Boot - configurações padrão                    -->
+    <!-- ===================================================== -->
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+
+    <!-- ===================================================== -->
+    <!-- Arquivos                                               -->
+    <!-- ===================================================== -->
+
+    <property name="LOG_PATH" value="logs"/>
+    <property name="LOG_FILE" value="${LOG_PATH}/financeiro.log"/>
+
+
+    <appender name="FILE"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <file>${LOG_FILE}</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+
+            <fileNamePattern>
+                ${LOG_PATH}/financeiro-%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+
+            <maxFileSize>10MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>500MB</totalSizeCap>
+
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{40} - %msg%n
+            </pattern>
+        </encoder>
+
+    </appender>
+
+
+    <!-- ===================================================== -->
+    <!-- APLICAÇÃO                                              -->
+    <!-- ===================================================== -->
+
+    <logger name="com.ricardo.financeiro"
+            level="DEBUG"/>
+
+
+    <!-- ===================================================== -->
+    <!-- SPRING TRANSACTIONS                                    -->
+    <!-- ===================================================== -->
+
+    <!-- Mostra criação/início/finalização das transações -->
+    <logger name="org.springframework.transaction"
+            level="TRACE"/>
+
+    <!-- Mostra BEGIN / COMMIT / ROLLBACK do JPA -->
+    <logger name="org.springframework.orm.jpa.JpaTransactionManager"
+            level="DEBUG"/>
+
+
+    <!-- ===================================================== -->
+    <!-- HIBERNATE TRANSACTIONS                                 -->
+    <!-- ===================================================== -->
+
+    <logger name="org.hibernate.engine.transaction.internal.TransactionImpl"
+            level="DEBUG"/>
+
+
+    <!-- ===================================================== -->
+    <!-- SQL                                                     -->
+    <!-- ===================================================== -->
+
+    <logger name="org.hibernate.SQL"
+            level="DEBUG"/>
+
+    <!-- Valores dos parâmetros -->
+    <logger name="org.hibernate.orm.jdbc.bind"
+            level="TRACE"/>
+
+
+    <!-- ===================================================== -->
+    <!-- HIKARI                                                  -->
+    <!-- ===================================================== -->
+
+    <!--
+        Evita o excesso de mensagens do HikariPool,
+        como housekeeper, pool stats e keepalive.
+    -->
+    <logger name="com.zaxxer.hikari"
+            level="INFO"/>
+
+
+    <!-- ===================================================== -->
+    <!-- ROOT                                                     -->
+    <!-- ===================================================== -->
+
+    <root level="INFO">
+
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+
+    </root>
+
+</configuration>
+```

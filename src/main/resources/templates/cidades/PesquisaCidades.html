@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/LayoutPadrao}"
+	xmlns:salvavidas="http://salvavidas.net"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+	
+<head>
+	<title>Pesquisa de cidades</title>
+</head>
+
+<body>
+	<section layout:fragment="conteudo">
+		<div class="page-header">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-xs-10">
+						<h1>
+							Pesquisa de cidades
+						</h1>
+					</div>
+					
+					<div class="col-xs-2" sec:authorize-url="/cidades/novo">
+						<div class="aw-page-header-controls">
+							<a class="btn  btn-default" th:href="@{/cidades/novo}">
+								<i class="glyphicon  glyphicon-plus-sign"></i>
+								<span class="hidden-xs  hidden-sm">Nova cidade</span>						
+							</a>
+						</div>
+					</div>
+				</div>				
+			</div>
+		</div>
+		
+		<div class="container-fluid">
+		
+			<form method="GET" class="form-vertical  js-form-loading" th:object="${cidadesFilter}">							
+				
+				<div class="row">					
+					<div class="col-sm-4  form-group">
+						<label class="control-label" for="estado">Estado</label>
+						<select class="form-control" id="estado" th:field="*{estado}">
+							<option value="">Selecione o estado</option>
+							<option th:each="estado : ${estados}" th:value="${estado.codigo}" th:text="${estado.nome}">São Paulo</option>
+						</select>											
+					</div>
+					
+					<div class="col-sm-8  form-group">						
+						<label class="control-label" for="nome">Nome</label>
+						<input class="form-control" type="text" id="nome" th:field="*{nome}"/>						
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<button class="btn  btn-primary" type="submit">Pesquisar</button>
+				</div>
+		
+			</form>
+			
+			<div class="table-responsive  sv-tabela-simples">
+				<table class="table  table-hover">
+					<thead>
+						<tr>
+							<th class="table-cidades-col-nome">
+								<salvavidas:ordenacao page="${pagina}" field="nome" text="Nome"/>
+							</th>
+							<th class="table-cidades-col-estado">
+								<salvavidas:ordenacao page="${pagina}" field="estado" text="Estado"/>
+							</th>						
+							<th class="col-acoes"></th>
+						</tr>
+					</thead>
+					
+					<tbody>
+						<tr th:each="cidade : ${pagina.conteudo}">
+							<td th:text="${cidade.nome}">Campinas</td>
+							<td class="text-right" th:text="${cidade.estado.nome}">São Paulo</td>
+							<td class="text-center">
+								<a class="btn  btn-link  btn-xs  js-tooltip" title="Editar" sec:authorize="hasRole('ROLE_CADASTRAR_CIDADE')"
+									href="#" th:href="@{/cidades/{codigo}(codigo=${cidade.codigo})}">
+									<i class="glyphicon  glyphicon-pencil"></i>
+								</a>
+								
+								<a class="btn  btn-link  btn-xs  js-tooltip  js-excluir-btn" title="Excluir" href="#"
+									data:objeto="${cidade.nome}" data:url="@{/cidades/{codigo}(codigo=${cidade.codigo})}"
+									 sec:authorize="hasRole('ROLE_DELETAR_CIDADE')">
+									<i class="glyphicon  glyphicon-remove"></i>
+								</a>
+							</td>
+						</tr>
+						
+						<tr th:if="${pagina.vazia}">
+							<td colspan="3">Nenhuma cidade encontrada</td>
+						</tr>
+					</tbody> 
+				</table>
+			</div>
+			
+			<salvavidas:paginacao page="${pagina}"/>
+			
+		</div>		
+		
+	</section>
+</body>
+
+
+
+</html>

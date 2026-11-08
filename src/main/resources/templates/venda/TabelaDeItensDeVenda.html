@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:data="http://www.thymeleaf.org/extras/data">
+	
+	<div class="sv-tabela-item  js-tabela-item-excluir" th:each="item : ${itens}" th:data-valor-total="${valorTotal}">		
+		<div class="sv-tabela-item__coluna  sv-tabela-item__coluna--foto">
+			<img th:src="@{/fotos/thumbnail.{foto}(foto=${item.livro.fotoOuMock})}" class="img-responsive" />
+		</div>	
+		
+		<div class="sv-tabela-item__coluna  sv-tabela-item__coluna--detalhes">
+			<span class="sv-tabela-livro-titulo" th:text="${item.livro.titulo}">Alcoólicos Anônimos</span>
+			<span class="label  label-default" th:text="${item.livro.isbn}">1111111111111</span>
+			<span class="sv-tabela-livro-origem" th:text="${item.livro.origem.descricao}">Internacional</span>
+		</div>
+		<div class="sv-tabela-item__coluna  sv-tabela-item__coluna--valores">
+			<div class="sv-tabela-livro-valor-pequeno">
+				<input class="sv-tabela-livro-campo-quantidade  js-tabela-livro-quantidade-item" type="text" maxlength="3" 
+					th:value="${item.quantidade}" th:data-codigo-livro="${item.livro.codigo}"
+					th:disabled="${venda != null ? venda.StatusDaVendaCancelada_SalvarProibido : false}">
+				<span>x R$ [[${{item.valorUnitario}}]]</span>
+			</div>
+			<div class="sv-tabela-livro-valor-grande">R$ [[${{item.valorTotal}}]]</div>
+		</div>
+		
+		<div class="sv-tabela-item__painel-exclusao" th:if="${venda != null ? venda.SalvarPermitido : false}"> <!-- th:if="${venda != null ? venda.SalvarPermitido : false}" -->
+			<span class="sv-tabela-item__titulo-exclusao">Excluir este item da venda?</span>
+			<button class="btn  btn-danger  js-btn-exclusao-item" type="button" th:data-codigo-livro="${item.livro.codigo}">
+				Sim, excluir!
+			</button>
+		</div>	
+	</div>
+	
+	<div class="sv-tabela-livros__vazio"  th:if="${itens.empty}">
+		<i class="glyphicon  glyphicon-shopping-cart"></i> 
+		<span>Você ainda não adicionou nenhum livro.</span>
+	</div>
+	
+</html>	
